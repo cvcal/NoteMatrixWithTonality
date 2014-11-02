@@ -16,7 +16,7 @@ There are plenty of existing languages in this domain. One obvious one is the to
 
 Other DSLs that do this sort include ABC (abcnotation.com), that takes textual input and can convert it to MIDI sound and a musical score image. This type of DSL, which is basically a textual way to input music in order to create scores, and is in no way intuitive, requiring a thorough grasp of musical notation and notes. Here is an example, from http://abcnotation.com/tunePage?a=www.vlier.net/muziek/Stockel/0606
 
-'''
+```
 X:1
 T:Aéroplane d'Assignée
 M:2/4
@@ -25,7 +25,7 @@ Q:1/4=100
 K:G
 DG|B2A2 G2DG|B2A2 G4|c2Ac B2GB|1A2FA B2:|2A2FA G4|
 |:d2e2 d2Bd|g2e2 d4|c2Ac B2GB|1A2FA B2G2:|2A2FA G2|]
-'''
+```
 
 Plenty of others go further this path, Haskore and CSound being favorite examples. These are much more powerful languages than ABC, but provide the synthesizer capability wrapped in syntax that's only friendly to people comfortable with standard programming languages. 
 
