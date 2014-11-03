@@ -14,6 +14,9 @@ Music! Specifically, simple, intuitive instrumental capabilities.
 
 There are plenty of existing languages in this domain. One obvious one is the tonematrix, described above. I would consider this a language, as it allows you to add, edit, and view the sequence of notes in your "program," which is not true for other instruments. A keyboard layout can be used to record things, but cannot be edited visually like the matrix format, since each note is played at its time, and does not appear visually at any other time, so it is impossible to see the piece as a whole. 
 
+http://www.blogcdn.com/downloadsquad.switched.com/media/2009/05/tonematrix.jpg
+An screenshot of the tonematrix interface.
+
 Other DSLs that do this sort include ABC (abcnotation.com), that takes textual input and can convert it to MIDI sound and a musical score image. This type of DSL, which is basically a textual way to input music in order to create scores, and is in no way intuitive, requiring a thorough grasp of musical notation and notes. Here is an example, from http://abcnotation.com/tunePage?a=www.vlier.net/muziek/Stockel/0606
 
 ```
@@ -27,7 +30,7 @@ DG|B2A2 G2DG|B2A2 G4|c2Ac B2GB|1A2FA B2:|2A2FA G4|
 |:d2e2 d2Bd|g2e2 d4|c2Ac B2GB|1A2FA B2G2:|2A2FA G2|]
 ```
 
-Plenty of others go further this path, Haskore and CSound being favorite examples. These are much more powerful languages than ABC, but provide the synthesizer capability wrapped in syntax that's only friendly to people comfortable with standard programming languages. 
+Plenty of others go further down this path, Haskore and CSound being favorite examples. These are much more powerful languages than ABC, but provide the synthesizer capability wrapped in syntax that's only friendly to people comfortable with standard programming languages. 
 
 These should serve as a warning. I need to keep the simplicity of the tonematrix, avoiding anything too code-y. However, I also cannot try to make this a replication of musical synthesizer programs that rely on knobs and dials to alter the values that describe timber and tone, as that will loose the advantage of designing this as a DSL.  For example, I would not consider the tenori-on a language.
 
@@ -41,6 +44,10 @@ Other potential additions include varying the length of the notes by extending t
 
 
 ## Example computations
+
+Here is an example with just color being matched to tone type (an awful example, in fact.)
+https://github.com/cvcal/NoteMatrixWithTonality/tree/master/documents/initial_examples/ex1.png
+https://github.com/cvcal/NoteMatrixWithTonality/tree/master/documents/initial_examples/ex1.mp4
 
 
 
