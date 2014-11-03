@@ -47,7 +47,7 @@ Other potential additions include varying the length of the notes by extending t
 
 Here is an example with just color being matched to tone type (an awful example, in fact.)
 https://github.com/cvcal/NoteMatrixWithTonality/tree/master/documents/initial_examples/ex1.png
-https://github.com/cvcal/NoteMatrixWithTonality/tree/master/documents/initial_examples/ex1.mp4
+https://github.com/cvcal/NoteMatrixWithTonality/tree/master/documents/initial_examples/ex1.m4a
 
 
 
