@@ -15,7 +15,7 @@ Music! Specifically, simple, intuitive instrumental capabilities.
 There are plenty of existing languages in this domain. One obvious one is the tonematrix, described above. I would consider this a language, as it allows you to add, edit, and view the sequence of notes in your "program," which is not true for other instruments. A keyboard layout can be used to record things, but cannot be edited visually like the matrix format, since each note is played at its time, and does not appear visually at any other time, so it is impossible to see the piece as a whole. 
 
 http://www.blogcdn.com/downloadsquad.switched.com/media/2009/05/tonematrix.jpg
-An screenshot of the tonematrix interface.
+A screenshot of the tonematrix interface.
 
 Other DSLs that do this sort include ABC (abcnotation.com), that takes textual input and can convert it to MIDI sound and a musical score image. This type of DSL, which is basically a textual way to input music in order to create scores, and is in no way intuitive, requiring a thorough grasp of musical notation and notes. Here is an example, from http://abcnotation.com/tunePage?a=www.vlier.net/muziek/Stockel/0606
 
