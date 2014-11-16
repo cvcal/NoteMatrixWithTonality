@@ -78,7 +78,8 @@ control over aspects of the tone quality with the 3-by-3 selection afterwards,
 which I can add on *top* of the basic instrument, as some form of modulation.
 
 The color selection is something I want to implement simply, so this limited 
-set of 54 options will offer some flexibility while 
+set of 54 options will offer some flexibility while allowing me to not make 
+this project a language that describes sound synthesis.
 
 ### Provided questions for this document:
 I answered many of these questions above, but I wanted to include more explicit
