@@ -140,6 +140,16 @@ there is more room for error. Here are some potential situations:
   colors. 
 * Notes could be inputed at incorrect locations, outside the bounds of the 
   grid. I would ignore these inputs and print a warning to stderr.
+* Multiple notes at one location - in the GUI, this could be prevented by 
+  simply defining a 'click-on-filled-square' to mean clearing that grid 
+  location, so that it's impossible to have two instruments playing the same 
+  note at the same time. This avoids the problem, but it doesn't solve it in a 
+  way I like. I prefer allowing different instruments to play the same note, as 
+  there is no good reason why they shouldn't, but that might mean dividing a 
+  square into stripes/boxes with the colors that have selected it. If there's 
+  only one color, that's easy, but if there's two, it would allow you to see 
+  both. This means that adding two notes at the same grid location would not 
+  actually be an error.
 
 **What tool support (e.g., error-checking, development environments) does your 
 project provide?**
@@ -200,13 +210,61 @@ perfect.
 * Has a grid, or multiple grids, and the number of times it loops through.
 * a method to translate the contents to audio.
 
+### Provided questions for this document
+As in the design section, I will provide direct answers to the DSL project's 
+questions. There will be some repetition. 
+
+**Your choice of an internal vs. external implementation and how and why you 
+made that choice.**
+
+The intermediate representation will be a set of classes in Java, so it will be 
+internal. The language itself would be a graphical interface, which will 
+necessarily be external. I believe the choices for this are obvious and can be 
+seen in the design section of this document.
+
+**Your choice of a host language and how and why you made that choice.**
+
+I will be coding in Java. Partly, this is because of the extensive set of 
+libraries and corresponding tutorials for sound creation and creating the GUI. 
+I chose Java due to it's universality and flexibility, along with the fact 
+that, since it is so close to Scala, I could potentially use some of the nice 
+Scala features we discussed in class without having to translate the entire 
+system. This is mostly relevant if I want to implement the external version of 
+this mentioned below.
+
+**Any significant syntax design decisions you've made and the reasons for those 
+decisions.**
+
+I described much of the clicking setup and composition order above. For this 
+GUI, these decisions come from the desire to make everything as intuitive as 
+possible, so that meant imagining myself with the grid and seeing my first 
+instincts for how I would interact with it. 
+
+Some difficulties that I had to clear up included how best to input notes with 
+colors. Should you pre-select colors and click notes on the grid to add those 
+to that instrument's track, or should you select the color every time you click 
+a note. I figured it would be more intuitive to be able to select multiple 
+notes for an instrument at a time, so I preferred the first option. Another 
+difficulty was how to choose colors and tones in the first place. I ended up 
+choosing to directly map my 6 colors with instruments, and add some modulation 
+on top for added variety, in order to avoid making this project solely about 
+synthesizing sounds.
+
+**An overview of the architecture of your system.**
+
+This is outlined above. 
+
+### Interesting thoughts, that I probably won't bother with.
+
 If the data structures above describe the representation of the program as it 
-is being messed with, and I do thing that that is the main advantage of an 
-object-oriented approach like this, it might also be nice to create an 
+is being messed with, and I do think that that is the main advantage of an 
+object-oriented approach like this, it doesn't solve the problem of saving 
+'programs/compositions.' For this purpose, it might also be nice to create an 
 external language of some sort. This language could translate into and out of 
 the object-oriented version, as a way to save the programs in a textual form, 
-and open them back up to be edited. It could also serve as a way to test a big
-portion of my language before worrying about the GUI.
+and open them back up to be edited. It would also be a nicer textual interface 
+than direct creation of objects through Java, and might be nice for testing 
+purposes because of this.
 
 This external DSL might look something like this:
 
@@ -218,10 +276,4 @@ Grid(x,y)
     ...
 ```
 
-I need to work this out some more, but I think that my first priority is to
-find how to implement the control over timbre/tone quality/instrument/whatever
-you want to call it. The way I choose to 'encode' the timbre will come directly
-from the way that the user selects it, how much control they are given, and
-the types of variables that my implementation of it needs.
-
-
+This would be a cool project on top of the current project, mostly for personal benefit (I would learn more about saving things, it would be a nice way to add new features later on before adding them to the GUI, etc.) but would not be very useful beyond this, as there are potentially other ways to save programs, say by using the Serializable interface.
