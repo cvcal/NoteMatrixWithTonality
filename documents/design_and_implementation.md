@@ -84,20 +84,20 @@ set of 54 options will offer some flexibility while
 I answered many of these questions above, but I wanted to include more explicit
 answers here as well.
 
-*How does a user write programs in your language (e.g., do they type in 
-commands, use a visual/graphical tool, speak, etc.)?*
+**How does a user write programs in your language (e.g., do they type in 
+commands, use a visual/graphical tool, speak, etc.)?**
 
 A user would write programs in the GUI described above.
 
-*What is the basic computation that your language performs (i.e., what is the 
-computational model)?*
+**What is the basic computation that your language performs (i.e., what is the 
+computational model)?**
 
 My language will perform a transition from a visual representation of discrete 
 notes that have relative pitch, location in time, and tone quality, to a sound 
 file or audio output of these pitches and sounds looping.
 
-*What are the basic data structures in your DSL, if any? How does a the user 
-create and manipulate data?*
+**What are the basic data structures in your DSL, if any? How does a the user 
+create and manipulate data?**
 
 The Grid is the basic data structure, though I guess you could consider each 
 note within the grid to be its own miniature data structure. Each note's 
@@ -105,8 +105,8 @@ position in the grid defines its time and pitch, and the user adds notes as
 described above. The grid then contains all of these notes and has the 
 functionality to output sound based on this series of notes.
 
-*What are the basic control structures in your DSL, if any? How does the user 
-specify or manipulate control flow?*
+**What are the basic control structures in your DSL, if any? How does the user 
+specify or manipulate control flow?**
 
 The most basic control structure is, again, the grid. That is, until I 
 implement the ability to loop multiple grids. Without the looping explicitly 
@@ -114,8 +114,8 @@ stated, the grid is an implicit loop, of which the user can define the length.
 With the loops explicitly added in, the user can then sequence multiple grids 
 and control the number of repetitions for each grid.
 
-*What kind(s) of input does a program in your DSL require? What kind(s) of 
-output does a program produce?*
+**What kind(s) of input does a program in your DSL require? What kind(s) of 
+output does a program produce?**
 
 Inputs would be ideally just the mouse-clicks. Output would be an audio file, 
 which would, again ideally, be playable from the GUI interface. In the likely 
@@ -123,8 +123,8 @@ event where the interface isn't fully operational by the end of this project,
 the input would be a Java program that uses my grid-and-note interfaces to 
 create a particular grid object and output a sound file.
 
-*Error handling: How can programs go wrong, and how does your language 
-communicate those errors to the user?*
+**Error handling: How can programs go wrong, and how does your language 
+communicate those errors to the user?**
 
 I don't see too many potential sources for errors. If I can make my GUI 
 interface fully operational, I should be able to prevent illegal actions, as I 
@@ -140,15 +140,15 @@ there is more room for error. Here are some potential situations:
 * Notes could be inputed at incorrect locations, outside the bounds of the 
   grid. I would ignore these inputs and print a warning to stderr.
 
-*What tool support (e.g., error-checking, development environments) does your 
-project provide?*
+**What tool support (e.g., error-checking, development environments) does your 
+project provide?**
 
 The GUI is the only tool that I will provide. If this isn't complete, the way 
 to input programs will be to use Java code directly, so any Java IDE or text-
 editor should work.
 
-*Are there any other DSLs for this domain? If so, what are they, and how does 
-your language compare to these other languages?*
+**Are there any other DSLs for this domain? If so, what are they, and how does 
+your language compare to these other languages?**
 
 There a plenty. I've mentioned a number of these in 
 [the description](https://github.com/cvcal/NoteMatrixWithTonality/blob/master/documents/description.md), 
