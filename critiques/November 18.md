@@ -7,3 +7,5 @@ A couple of possible sources for error (or just things to consider) that foresee
 - I'm not sure how one will clear a grid location at the moment? You could have a clear cell button that would then clear the cells you click, but then for cells with multiple colors would it clear all of them?
 
 Also, currently the structure for the language looks clear with your current outline of data structures, but I would say it is not exactly clear what a program as an internal DSL will look like. This is fine for now as maybe it will make more sense as you dive more into jMusic itself, but it would be nice to know what a program would look like (what would have to be created, the order of things in the language, etc.).
+
+TO BE CONTINUED
