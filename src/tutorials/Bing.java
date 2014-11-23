@@ -2,9 +2,10 @@
 
 package tutorials;
 import jm.JMC;
+import jm.audio.Instrument;
 import jm.music.data.*;
-import jm.util.*;
-import jm.audio.*;
+import jm.util.Play;
+import jm.constants.*;
 
 /**
 * This is the simplest jMusic program of all, based off of tutorial's sample 
@@ -20,19 +21,19 @@ public final class Bing implements JMC{
 
 	public static void main(String[] args){
 		//create a bunch of Cs minim (half note)
-		Note c5 = new Note(C5, MINIM);
-		Note c4 = new Note(C4, MINIM);
-		Note c3 = new Note(C3, MINIM);
-		Note c2 = new Note(C2, MINIM);
+		Note c5 = new Note(C5, 0.7, P, PAN_CENTRE);
+		Note c4 = new Note(C4, 1, P, PAN_CENTRE);
+		Note c3 = new Note(C3, 1, MF, PAN_CENTRE);
+		Note c2 = new Note(C2, 0.5, FF, PAN_CENTRE);
 		
 		//create a phrase		
 		Phrase phr = new Phrase();
 		
 		//put the note inside the phrase
 		phr.addNote(c5);
+		phr.addNote(c4);
 		phr.addNote(c3);
 		phr.addNote(c2);
-		phr.addNote(c4);
 		
 		//pack the phrase into a part
 		Part p = new Part();
@@ -43,10 +44,12 @@ public final class Bing implements JMC{
 		s.addPart(p);
 		
 		//write the score as a MIDI file to disk, and then play it back
-		Write.midi(s,"Bing.mid");
-		Play.mid("Bing.mid");
-		Instrument inst = new SawtoothInst(44100);
-		Write.au(s, inst);
+		//Write.midi(s,"Bing.mid");
+		//Play.mid("Bing.mid");
+		
+		Instrument inst = new BreathyFluteInst(44100);
+		// Play the score as a Breathy Flute
+		Play.audio(phr, inst);
 	}
 
 }
