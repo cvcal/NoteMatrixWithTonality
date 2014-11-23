@@ -13,8 +13,8 @@ public final class RowYourBoat implements JMC{
 		//Create the data objects we want to use
 		Score score = new Score("Row Your Boat");
 		//Parts can have a name, instrument, and channel.
-		Part flute = new Part("Flute", VIBES, 0);
-		Part trumpet = new Part("Guitar", PIZZ, 1);
+		Part flute = new Part("Flute", BIRD, 0);
+		Part trumpet = new Part("Guitar", BOTTLE, 1);
 		Part clarinet = new Part("Clarinet", CLARINET, 2);
 		
 		//Lets write the music in a convenient way.
@@ -33,23 +33,23 @@ public final class RowYourBoat implements JMC{
 		phrase3.setStartTime(8.0);
 		 
 		//Play different parts in different octaves
-		Mod.transpose(phrase1, 12);
-		Mod.transpose(phrase3, -12);
+		//Mod.transpose(phrase1, 12);
+		//Mod.transpose(phrase3, -12);
 		
 		//loop phrases once
-		Mod.repeat(phrase1, 1);
-		Mod.repeat(phrase2, 1);
-		Mod.repeat(phrase3, 1);
+		Mod.repeat(phrase1, 2);
+		Mod.repeat(phrase2, 2);
+		Mod.repeat(phrase3, 2);
 		
 		//add phrases to the parts
 	 	flute.addPhrase(phrase1);		
 		trumpet.addPhrase(phrase2);
-		//clarinet.addPhrase(phrase3);
+		clarinet.addPhrase(phrase3);
 		
 		//add parts to the score
 		score.addPart(flute);
 		score.addPart(trumpet);	
-		//score.addPart(clarinet);		
+		score.addPart(clarinet);		
 				
 		score.setTempo(139);
 		
