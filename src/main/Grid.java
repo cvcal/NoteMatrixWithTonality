@@ -154,10 +154,67 @@ public class Grid implements JMC {
 	 * @return part
 	 */
 	public Part getPart(int instrumentNum) {
+		// Use the private helper function to add a cycle of the grid.
+		Part p = new Part(instrument[instrumentNum][0]);
+		return addToPart(p, instrumentNum);
+	}
+
+	/**
+	 *  
+	 * @param numRepeats - the number of times each part should repeat
+	 * @return score corresponding to the grid
+	 */
+	public Score getScoreWithRepeats(int numRepeats) {
+		Score s = new Score(tempo);
+		for (int i = 0; i < numInstruments; i++) {
+			Part p = new Part(instrument[i][0]);
+			
+			// Add the numRepeats of each part
+			for (int j = 0; j < numRepeats; j++) {
+				p = addToPart(p, i);
+			}
+			s.addPart(p);
+		}
+		return s;
+	}
+	
+	// -------------------------
+	// Private Methods
+	// -------------------------
+	
+	/**
+	 * Add the note to the matrix/grid
+	 * 
+	 * @param miniInst - the number/index of the instrument selected
+	 * @param x - the note's horizontal position in the grid
+	 * @param y - the note's vertical position in the grid, the pitch
+	 */
+	private void addNote(int midiInst, int x, int y) {		
+		grid[midiInst][x][y] = true;
+	}
+	
+	/**
+	 * Remove the note from the matrix/grid
+	 * 
+	 * @param miniInst - the number/index of the instrument selected
+	 * @param x - the note's horizontal position in the grid
+	 * @param y - the note's vertical position in the grid, the pitch
+	 */
+	private void removeNote(int midiInst, int x, int y) {
+		grid[midiInst][x][y] = false;
+	}
+	
+	/**
+	 * This method returns the part passed in with a grid's worth of notes
+	 * corresponding to the specified instrument's notes in the grid, 
+	 * 
+	 * @param p  - the part to add a cycle of the grid to
+	 * @param instrumentNum
+	 * @return
+	 */
+	private Part addToPart(Part p, int instrumentNum) {
 		// Only add notes if there is a defined instrument for this number.
 		if (instrument[instrumentNum][1] == 1){ 
-			Part p = new Part(instrument[instrumentNum][0]);
-			
 			// Traverse grid to add notes
 			for (int j = 0; j < length; j++) {
 				// first find the number of notes at this time
@@ -199,32 +256,5 @@ public class Grid implements JMC {
 		} else {
 			return null;
 		}
-	}
-
-
-	// -------------------------
-	// Private Methods
-	// -------------------------
-	
-	/**
-	 * Add the note to the matrix/grid
-	 * 
-	 * @param miniInst - the number/index of the instrument selected
-	 * @param x - the note's horizontal position in the grid
-	 * @param y - the note's vertical position in the grid, the pitch
-	 */
-	private void addNote(int midiInst, int x, int y) {		
-		grid[midiInst][x][y] = true;
-	}
-	
-	/**
-	 * Remove the note from the matrix/grid
-	 * 
-	 * @param miniInst - the number/index of the instrument selected
-	 * @param x - the note's horizontal position in the grid
-	 * @param y - the note's vertical position in the grid, the pitch
-	 */
-	private void removeNote(int midiInst, int x, int y) {
-		grid[midiInst][x][y] = false;
 	}
 }
