@@ -3,7 +3,6 @@ package tutorials;
 import jm.JMC;
 import jm.util.*;
 import jm.music.data.*;
-import jm.util.*;
 
 /**
  * This class uses the jMusic CPhrase (Chord Phrase)
@@ -26,7 +25,7 @@ public final class Chords implements JMC{
 		for (int i = 0; i < 6; i++) {
 			secondInversion(rootPitch);
 			rootPitch -= 7;
-			p.addPhrase(new Phrase(new Rest(), 1));
+			p.addPhrase(new Phrase(new Rest()));
 			rootPosition(rootPitch);
 			rootPitch += 5;
 		}
@@ -36,7 +35,7 @@ public final class Chords implements JMC{
 		
 		//pack the part into a score
 		s.addPart(p);
-		s.setTempo(120);
+		s.setTempo(150);
 		//display the music
 		View.show(s);
 		
