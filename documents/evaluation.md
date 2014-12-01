@@ -78,7 +78,12 @@ it's component notes.
 implement, given your host language choice? Did you want to support multiple 
 features, but you had trouble getting them to play well together?**
 
+Most of the trouble I've had was in learning the appropriate library, and then 
+considering what data structure would best represent the music while remaining 
+easy to edit and re-compile.
+
 
 <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 ## What's left to accomplish before the end of the project?
 
+The GUI! (and... the GUI)
