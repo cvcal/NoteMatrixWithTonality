@@ -1,6 +1,6 @@
 //give this class access to the jMusic classes
 
-package tutorials;
+package tutorials.JMusic;
 import jm.JMC;
 import jm.audio.Instrument;
 import jm.music.data.*;

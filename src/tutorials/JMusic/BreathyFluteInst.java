@@ -1,4 +1,4 @@
-package tutorials;
+package tutorials.JMusic;
 
 import jm.audio.io.*;
 import jm.audio.synth.*;

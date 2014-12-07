@@ -1,4 +1,4 @@
-package tutorials;
+package tutorials.JMusic;
 import jm.JMC;
 import jm.music.data.*;
 import jm.util.*;
