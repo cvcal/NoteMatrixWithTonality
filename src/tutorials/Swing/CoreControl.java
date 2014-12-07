@@ -63,6 +63,13 @@ public class CoreControl {
             for (int i = vertOffset; i <= heightOfGrid; i += heightOfCell) {
                 g.drawLine(horizOffset, i, widthOfGrid+horizOffset, i);
             }
+            
+            
+            int xpoints[] = {25, 145, 25, 145, 25};
+            int ypoints[] = {25, 25, 145, 145, 25};
+            int npoints = 4;
+            
+            g.fillPolygon(xpoints, ypoints, npoints);
         }
 
         public void fillCell(int x, int y) {
@@ -108,11 +115,6 @@ public class CoreControl {
                 window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 window.add(grid);
                 window.setVisible(true);
-                grid.fillCell(0, 0);
-                grid.fillCell(79, 0);
-                grid.fillCell(0, 49);
-                grid.fillCell(79, 49);
-                grid.fillCell(39, 24);
             }
         });
     }
