@@ -69,8 +69,8 @@ public class GridTrial {
         
         private static int horizOffset = 10;
         private static int vertOffset = 10;
-        private static int widthOfCell = 20;
-        private static int heightOfCell = 25;
+        private static int widthOfCell = 40;
+        private static int heightOfCell = 40;
         private static int widthOfGrid = 800;
         private static int heightOfGrid = 500;
         
@@ -88,9 +88,17 @@ public class GridTrial {
             // Fill the cells that have been selected
             for (PointAndCount cell : fillCells) {
             	if (cell.getCount() == 1) {
-            		paintWholeFilledCell(horizOffset + (cell.getX() * widthOfCell), vertOffset + (cell.getY() * heightOfCell), Color.RED, g);
-            	} else {
-            		paintTwoColoredCell(horizOffset + (cell.getX() * widthOfCell), vertOffset + (cell.getY() * heightOfCell), Color.BLUE, Color.ORANGE, g);
+            		paintWholeFilledCell(horizOffset + (cell.getX() * widthOfCell), vertOffset + (cell.getY() * heightOfCell), 
+            				Color.RED, g);
+            	} else if (cell.getCount() == 2) {
+            		paintTwoColoredCell(horizOffset + (cell.getX() * widthOfCell), vertOffset + (cell.getY() * heightOfCell), 
+            				Color.BLUE, Color.ORANGE, g);
+            	} else if (cell.getCount() == 3) {
+            		paintThreeColoredCell(horizOffset + (cell.getX() * widthOfCell), vertOffset + (cell.getY() * heightOfCell), 
+            				Color.GREEN, Color.BLUE, Color.ORANGE, g);
+            	} else if (cell.getCount() == 4) {
+            		paintFourColoredCell(horizOffset + (cell.getX() * widthOfCell), vertOffset + (cell.getY() * heightOfCell), 
+            				Color.RED, Color.GREEN, Color.BLUE, Color.ORANGE, g);
             	}
             	
             }
@@ -146,6 +154,77 @@ public class GridTrial {
             g.fillPolygon(x2points, y2points, npoints);
         }
 
+        /**
+         * Add a rectangle filled with 3 specified colors to the specified position
+         * 
+         * @param x - x position in element to be painted
+         * @param y - y position in element to be painted
+         * @param c1 - color of first section
+         * @param c2 - color of second section
+         * @param c3 - color of third section
+         * @param g
+         */
+        public void paintThreeColoredCell(int x, int y, Color c1, Color c2, Color c3, Graphics g) {
+        	// Paint 1st half (bottom
+        	g.setColor(c1);
+            int x1points[] = {x, x, x+widthOfCell, x+widthOfCell, x+widthOfCell/2};
+            int y1points[] = {y+2*heightOfCell/3, y+heightOfCell, y+heightOfCell, y+2*heightOfCell/3, y+heightOfCell/2};
+            int npoints = 5;
+            g.fillPolygon(x1points, y1points, npoints);
+            
+            // Paint 2nd half
+        	g.setColor(c2);
+            int x2points[] = {x, x+widthOfCell/2, x+widthOfCell/2, x};
+            int y2points[] = {y, y, y+heightOfCell/2, y+2*heightOfCell/3};
+            npoints = 4;
+            g.fillPolygon(x2points, y2points, npoints);
+            
+            // Paint 3nd half
+        	g.setColor(c3);
+            int x3points[] = {x+widthOfCell, x+widthOfCell/2, x+widthOfCell/2, x+widthOfCell};
+            int y3points[] = {y, y, y+heightOfCell/2, y+2*heightOfCell/3};
+            npoints = 4;
+            g.fillPolygon(x3points, y3points, npoints);
+        }
+        
+        /**
+         * Add a rectangle filled with 4 specified colors to the specified position
+         * 
+         * @param x - x position in element to be painted
+         * @param y - y position in element to be painted
+         * @param c1 - color of first section
+         * @param c2 - color of second section
+         * @param c3 - color of third section
+         * @param c4 - color of third section
+         * @param g
+         */
+        public void paintFourColoredCell(int x, int y, Color c1, Color c2, Color c3, Color c4, Graphics g) {
+        	// Paint 1st
+        	g.setColor(c1);
+            int x1points[] = {x, x, x+widthOfCell/2};
+            int y1points[] = {y, y+heightOfCell, y+heightOfCell/2};
+            int npoints = 3;
+            g.fillPolygon(x1points, y1points, npoints);
+            
+            // Paint 2nd 
+        	g.setColor(c2);
+            int x2points[] = {x, x+widthOfCell, x+widthOfCell/2};
+            int y2points[] = {y, y, y+heightOfCell/2};
+            g.fillPolygon(x2points, y2points, npoints);
+            
+            // Paint 3nd 
+        	g.setColor(c3);
+            int x3points[] = {x+widthOfCell, x+widthOfCell, x+widthOfCell/2};
+            int y3points[] = {y, y+heightOfCell, y+heightOfCell/2};
+            g.fillPolygon(x3points, y3points, npoints);
+            
+            // Paint 4nd 
+        	g.setColor(c4);
+            int x4points[] = {x, x+widthOfCell, x+widthOfCell/2};
+            int y4points[] = {y+heightOfCell, y+heightOfCell, y+heightOfCell/2};
+            g.fillPolygon(x4points, y4points, npoints);
+        }
+        
         /**	
          * If the cell has never been filled, this marks it as a cell to be filled,
          * otherwise, it marks it as a cell to be filled with more colors
