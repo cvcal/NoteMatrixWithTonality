@@ -1,8 +1,16 @@
 package main;
+import java.awt.Graphics;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.Color;
+
+import javax.swing.JPanel;
+
 import jm.JMC;
 import jm.music.data.*;
 //import jm.music.tools.*;
 //import jm.util.*;
+import jm.util.Play;
 
 /**
  * This class represents the grid, the "matrix" part of the note matrix
@@ -10,25 +18,34 @@ import jm.music.data.*;
  * @author Chloe Calvarin
  */
 
-public class Grid implements JMC {
+public class Grid extends JPanel implements MouseListener, JMC {
 	// -------------------------
 	// Data Members
 	// -------------------------
-	static int numInstruments = 4;
-	static double tempo = 120;
-	int length;   // length of grid
-	int height;   // height of grid
-	int baseNote; // the note of the bottom of the grid
+	private static int numInstruments = 4;
+	private static double tempo = 120;
+	private int length;   // length of grid
+	private int height;   // height of grid
+	private int baseNote; // the note of the bottom of the grid
 	
 	
 	// The first location is the instrument value, the second is a flag
 	// for whether or not the instrument has been initialized
-	int[][] instrument;
+	private int[][] instrument;
 	
 	// The first dimension is for the instrument, the second is for the
 	// length and the last is for the height. 
-	boolean[][][] grid;
-
+	private boolean[][][] grid;
+	
+	// Graphics related numbers
+	private int horizOffset = 10; // offset from the left edge of the component
+	private int vertOffset  = 10; // offset from the top edge of the component
+	private int cellHeight  = 15; // height of an individual cell
+	private int cellWidth   = 15; // width of an individual cell
+	private int horizSpacer = 2;  // Space between two horizontally adjacent cells
+	private int vertSpacer  = 2;  // Space between two vertically adjacent cells
+	private Color[] instColors;   // Colors related to the instruments.
+	
 	// -------------------------
 	// Constructor
 	// -------------------------
@@ -44,6 +61,9 @@ public class Grid implements JMC {
 		// the two matrices will initialize to 0 and false, respectively.
 		instrument = new int[numInstruments][2];
 		grid = new boolean[numInstruments][length][height];
+		instColors = new Color[numInstruments];
+		
+        addMouseListener(this);
 	}
 
 	// ------------------------- 
@@ -67,25 +87,156 @@ public class Grid implements JMC {
 		switch (colorChoice) {
 			case 0: instrument[numInGrid][0] = PIZZICATO_STRINGS;
 				instrument[numInGrid][1] = 1;
+				instColors[numInGrid] = Color.RED;
 				break;
 			case 1: instrument[numInGrid][0] = CLAVINET;
 				instrument[numInGrid][1] = 1;
+				instColors[numInGrid] = Color.BLUE;
 				break;
 			case 2: instrument[numInGrid][0] = CLARINET;
 				instrument[numInGrid][1] = 1;
+				instColors[numInGrid] = Color.ORANGE;
 				break;
 			case 3: instrument[numInGrid][0] = BIRD;
 				instrument[numInGrid][1] = 1;
+				instColors[numInGrid] = Color.GREEN;
 				break;
 			case 4: instrument[numInGrid][0] = PANFLUTE;
 				instrument[numInGrid][1] = 1;
+				instColors[numInGrid] = Color.YELLOW;
 				break;
 			case 5: instrument[numInGrid][0] = GLOCK;
 				instrument[numInGrid][1] = 1;
+				instColors[numInGrid] = Color.PINK;
 				break;
 			default:
 				// TODO error of color choice
 				break;
+		}
+	}
+	
+	/** 
+	 * 
+	 */
+	@Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+		
+        g.setColor(Color.BLACK);
+        g.fillRect(0, 0, horizOffset * 2 + cellWidth  * length + horizSpacer * (length-1),
+        		         vertOffset * 2  + cellHeight * height + vertSpacer  * (height-1));
+        
+        // draw all the grid elements
+        for (int i = 0; i < length; i++) {
+        	for (int j = 0; j < height; j++) {
+        		int numInstrumentsInCell = 0;
+        		for (int k = 0; k < numInstruments; k++) {
+        			if (grid[k][i][j])
+        				numInstrumentsInCell++;
+        		}
+        		
+        		// Draw the cell (interestingly, you want to draw them vertically upside 
+        		// down, so the lower pitches (lower indices in grid) are lower in the 
+        		// visual field (higher "y" values) 
+        		int x = horizOffset + (cellWidth + horizSpacer)*i;
+        		int y = vertOffset  + (cellHeight + vertSpacer)*(height-1-j);
+        		if (numInstrumentsInCell == 0) {
+        			// draw an empty cell if no instruments have selected it
+        			g.setColor(Color.WHITE);
+        			g.fillRect(x, y, cellWidth, cellHeight);
+        		} else {
+        			// Get the appropriate colors for the cell
+        			Color[] colorArray = new Color[numInstrumentsInCell];
+        			int numSoFar = 0;
+        			for (int k = 0; k < numInstruments; k++) {
+            			if (grid[k][i][j]) {
+            				colorArray[numSoFar] = instColors[k];
+            			}
+            		}
+        			
+        			paintColoredCell(x, y, colorArray, numInstrumentsInCell, g);
+        		}
+        		
+        		
+        	}
+        }
+	}
+	
+	/**
+	 * Paint the cell with the appropriate colors
+	 * 
+	 * @param x - x position of cell (relative to component)
+	 * @param y - y ''
+	 * @param colorArray - array of the colors this cell is to be painted with
+	 * @param numColors - number of colors this cell is to be painted with
+	 * @param g 
+	 */
+	private void paintColoredCell(int x, int y, Color[] colorArray, int numColors, Graphics g) {
+		switch (numColors) {
+		case 1 : {
+			g.setColor(colorArray[0]);
+			g.fillRect(x, y, cellWidth, cellHeight);
+			break;
+		}
+		case 2 : {
+			g.setColor(colorArray[0]);
+			int x1points[] = {x, x+cellWidth, x};
+            int y1points[] = {y, y, y+cellHeight};
+            int npoints = 3;
+            g.fillPolygon(x1points, y1points, npoints);
+            
+			g.setColor(colorArray[1]);
+            int x2points[] = {x, x+cellWidth, x+cellWidth};
+            int y2points[] = {y+cellHeight, y, y+cellHeight};
+            g.fillPolygon(x2points, y2points, npoints);
+			
+			break;
+		}
+		case 3 : {
+			g.setColor(colorArray[0]);
+            int x1points[] = {x, x, x+cellWidth, x+cellWidth, x+cellWidth/2};
+            int y1points[] = {y+2*cellHeight/3, y+cellHeight, y+cellHeight, y+2*cellHeight/3, y+cellHeight/2};
+            int npoints = 5;
+            g.fillPolygon(x1points, y1points, npoints);
+            
+			g.setColor(colorArray[1]);
+            int x2points[] = {x, x+cellWidth/2, x+cellWidth/2, x};
+            int y2points[] = {y, y, y+cellHeight/2, y+2*cellHeight/3};
+            npoints = 4;
+            g.fillPolygon(x2points, y2points, npoints);
+            
+			g.setColor(colorArray[2]);
+            int x3points[] = {x+cellWidth, x+cellWidth/2, x+cellWidth/2, x+cellWidth};
+            int y3points[] = {y, y, y+cellHeight/2, y+2*cellHeight/3};
+            g.fillPolygon(x3points, y3points, npoints);
+			break;
+		}
+		case 4 : {
+			g.setColor(colorArray[0]);
+            int x1points[] = {x, x, x+cellWidth/2};
+            int y1points[] = {y, y+cellHeight, y+cellHeight/2};
+            int npoints = 3;
+            g.fillPolygon(x1points, y1points, npoints);
+            
+			g.setColor(colorArray[1]);
+            int x2points[] = {x, x+cellWidth, x+cellWidth/2};
+            int y2points[] = {y, y, y+cellHeight/2};
+            g.fillPolygon(x2points, y2points, npoints);
+            
+			g.setColor(colorArray[2]);
+            int x3points[] = {x+cellWidth, x+cellWidth, x+cellWidth/2};
+            int y3points[] = {y, y+cellHeight, y+cellHeight/2};
+            g.fillPolygon(x3points, y3points, npoints);
+            
+			g.setColor(colorArray[3]);
+            int x4points[] = {x, x+cellWidth, x+cellWidth/2};
+            int y4points[] = {y+cellHeight, y+cellHeight, y+cellHeight/2};
+            g.fillPolygon(x4points, y4points, npoints);
+			break;
+		}
+		default : 
+			// TODO too many colors
+			break;
 		}
 	}
 	
@@ -256,5 +407,33 @@ public class Grid implements JMC {
 		} else {
 			return null;
 		}
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub	
+
+		// TODO remove hack to get visual to play.
+		Play.midi(getScoreWithRepeats(3));
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub		
 	}
 }
