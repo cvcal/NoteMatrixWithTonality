@@ -40,10 +40,10 @@ public class Grid extends JPanel implements MouseListener, JMC {
 	// Graphics related numbers
 	private int horizOffset = 10; // offset from the left edge of the component
 	private int vertOffset  = 10; // offset from the top edge of the component
-	private int cellHeight  = 15; // height of an individual cell
-	private int cellWidth   = 15; // width of an individual cell
-	private int horizSpacer = 2;  // Space between two horizontally adjacent cells
-	private int vertSpacer  = 2;  // Space between two vertically adjacent cells
+	private int cellHeight  = 20; // height of an individual cell
+	private int cellWidth   = 20; // width of an individual cell
+	private int horizSpacer = 4;  // Space between two horizontally adjacent cells
+	private int vertSpacer  = 4;  // Space between two vertically adjacent cells
 	private Color[] instColors;   // Colors related to the instruments.
 	
 	// -------------------------
@@ -116,7 +116,7 @@ public class Grid extends JPanel implements MouseListener, JMC {
 	}
 	
 	/** 
-	 * 
+	 * Heads the visual representation of current grid
 	 */
 	@Override
     protected void paintComponent(Graphics g) {
@@ -131,8 +131,9 @@ public class Grid extends JPanel implements MouseListener, JMC {
         	for (int j = 0; j < height; j++) {
         		int numInstrumentsInCell = 0;
         		for (int k = 0; k < numInstruments; k++) {
-        			if (grid[k][i][j])
+        			if (grid[k][i][j]) {
         				numInstrumentsInCell++;
+        			}
         		}
         		
         		// Draw the cell (interestingly, you want to draw them vertically upside 
@@ -151,6 +152,7 @@ public class Grid extends JPanel implements MouseListener, JMC {
         			for (int k = 0; k < numInstruments; k++) {
             			if (grid[k][i][j]) {
             				colorArray[numSoFar] = instColors[k];
+            				numSoFar++;
             			}
             		}
         			
@@ -189,7 +191,6 @@ public class Grid extends JPanel implements MouseListener, JMC {
             int x2points[] = {x, x+cellWidth, x+cellWidth};
             int y2points[] = {y+cellHeight, y, y+cellHeight};
             g.fillPolygon(x2points, y2points, npoints);
-			
 			break;
 		}
 		case 3 : {
@@ -414,12 +415,19 @@ public class Grid extends JPanel implements MouseListener, JMC {
 		// TODO Auto-generated method stub	
 
 		// TODO remove hack to get visual to play.
-		Play.midi(getScoreWithRepeats(3));
+		if (e.getX() < horizOffset) {
+			Play.midi(getScoreWithRepeats(3));
+		}
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub		
+		int x = (e.getX() - horizOffset) / (cellWidth+horizSpacer);
+		int y = height - 1 - (e.getY() - vertOffset) / (cellHeight+vertSpacer);
+		
+		// TODO change to proper instrument
+		changeLocation(1, x, y);
+		repaint();
 	}
 
 	@Override

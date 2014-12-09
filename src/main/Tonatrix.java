@@ -1,6 +1,7 @@
 package main;
 
 import java.awt.EventQueue;
+import java.awt.FlowLayout;
 
 import javax.swing.JFrame;
 import javax.swing.UIManager;
@@ -12,7 +13,7 @@ public class Tonatrix {
 
 	public static void main(String[] a) {
 		
-		final Grid grid = new Grid(12,24);
+		final Grid grid = new Grid(12,18);
 		
 		/*
 		 * For now, this is a hack, it contains the same note sequence
