@@ -1,5 +1,9 @@
 # Note Matrix with Tonality project
 
+<p align="center">
+  <img src="https://github.com/cvcal/NoteMatrixWithTonality/blob/master/documents/pictures/logo.png" width="40" />
+</p>
+
 See the 
 [project requirements](http://www.cs.hmc.edu/~benw/teaching/cs111_fa14/project.html) 
 for instructions on setting up your project.
