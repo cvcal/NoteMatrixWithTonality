@@ -3,8 +3,13 @@ import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.Color;
+import java.awt.EventQueue;
+import java.awt.Font;
 
+import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 import jm.JMC;
 import jm.music.data.*;
@@ -27,7 +32,7 @@ public class Grid extends JPanel implements MouseListener, JMC {
 	private int length;   // length of grid
 	private int height;   // height of grid
 	private int baseNote; // the note of the bottom of the grid
-	
+	private int currentInst; // index of the current selected instrument
 	
 	// The first location is the instrument value, the second is a flag
 	// for whether or not the instrument has been initialized
@@ -38,12 +43,22 @@ public class Grid extends JPanel implements MouseListener, JMC {
 	private boolean[][][] grid;
 	
 	// Graphics related numbers
-	private int horizOffset = 10; // offset from the left edge of the component
-	private int vertOffset  = 10; // offset from the top edge of the component
+	private int generalSpacer = 10;
+	private int colorChooserSpacer = 8;
+	private int colorChooserDimensions = 80;
+	private int playButtonLength = 80;
+	private int playButtonHeight = 40;
+	private int clearButtonLength = 80;
+	private int clearButtonHeight = 40;
+	
+	// Grid "
+	private int horizGridOffset = 100; // offset from the left edge of the component
+	private int vertGridOffset  = 10; // offset from the top edge of the component
 	private int cellHeight  = 20; // height of an individual cell
 	private int cellWidth   = 20; // width of an individual cell
-	private int horizSpacer = 4;  // Space between two horizontally adjacent cells
-	private int vertSpacer  = 4;  // Space between two vertically adjacent cells
+	private int horizCellSpacer = 4;  // Space between two horizontally adjacent cells
+	private int vertCellSpacer  = 4;  // Space between two vertically adjacent cells
+	
 	private Color[] instColors;   // Colors related to the instruments.
 	
 	// -------------------------
@@ -87,7 +102,7 @@ public class Grid extends JPanel implements MouseListener, JMC {
 		switch (colorChoice) {
 			case 0: instrument[numInGrid][0] = PIZZICATO_STRINGS;
 				instrument[numInGrid][1] = 1;
-				instColors[numInGrid] = Color.RED;
+				instColors[numInGrid] = Color.YELLOW;
 				break;
 			case 1: instrument[numInGrid][0] = CLAVINET;
 				instrument[numInGrid][1] = 1;
@@ -97,13 +112,13 @@ public class Grid extends JPanel implements MouseListener, JMC {
 				instrument[numInGrid][1] = 1;
 				instColors[numInGrid] = Color.ORANGE;
 				break;
-			case 3: instrument[numInGrid][0] = BIRD;
+			case 3: instrument[numInGrid][0] = PIANO;
 				instrument[numInGrid][1] = 1;
 				instColors[numInGrid] = Color.GREEN;
 				break;
 			case 4: instrument[numInGrid][0] = PANFLUTE;
 				instrument[numInGrid][1] = 1;
-				instColors[numInGrid] = Color.YELLOW;
+				instColors[numInGrid] = Color.RED;
 				break;
 			case 5: instrument[numInGrid][0] = GLOCK;
 				instrument[numInGrid][1] = 1;
@@ -121,10 +136,45 @@ public class Grid extends JPanel implements MouseListener, JMC {
 	@Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+        g.setFont(g.getFont().deriveFont(Font.BOLD));
 		
+        // Paint entire background black
         g.setColor(Color.BLACK);
-        g.fillRect(0, 0, horizOffset * 2 + cellWidth  * length + horizSpacer * (length-1),
-        		         vertOffset * 2  + cellHeight * height + vertSpacer  * (height-1));
+        g.fillRect(0, 0, horizGridOffset + generalSpacer + cellWidth  * length + horizCellSpacer * (length-1),
+        		         vertGridOffset + generalSpacer  + cellHeight * height + vertCellSpacer  * (height-1));
+        
+        // Draw the color selector
+        // TODO rewrite this to be variable based on numInstruments
+        g.setColor(Color.WHITE);
+        g.fillRect(generalSpacer, generalSpacer, colorChooserDimensions, colorChooserDimensions);
+        for (int i = 0; i < numInstruments; i++) {
+        	int boxWidthHeight = (colorChooserDimensions-3*colorChooserSpacer)/2;
+        	int xLocOfBox = generalSpacer + colorChooserSpacer + (i%2)*(boxWidthHeight+colorChooserSpacer);
+        	int yLocOfBox = generalSpacer + colorChooserSpacer + (i/2)*(boxWidthHeight+colorChooserSpacer);
+        	
+        	// Draw black outline, and internal box, and highlight the current selection
+        	g.setColor(Color.BLACK);
+        	if (i == currentInst) {
+        		g.setColor(Color.LIGHT_GRAY);
+        	}
+        	g.fillRect(xLocOfBox-2, yLocOfBox-2, boxWidthHeight+4, boxWidthHeight+4);
+        	g.setColor(instColors[i]);
+        	g.fillRect(xLocOfBox, yLocOfBox, boxWidthHeight, boxWidthHeight);
+        }
+        
+        // Draw play button
+        g.setColor(Color.LIGHT_GRAY);
+        g.fillRect(generalSpacer, generalSpacer*2 + colorChooserDimensions, 
+        			playButtonLength, playButtonHeight);
+        g.setColor(Color.BLACK);
+        g.drawString("Play", generalSpacer+5, generalSpacer*2 + colorChooserDimensions + playButtonHeight*2/3);
+        
+        // Draw the clear button
+        g.setColor(Color.LIGHT_GRAY);
+        g.fillRect(generalSpacer, generalSpacer*3 + colorChooserDimensions + playButtonHeight, 
+        			clearButtonLength, clearButtonHeight);
+        g.setColor(Color.BLACK);
+        g.drawString("Clear", generalSpacer+5, generalSpacer*3 + colorChooserDimensions + playButtonHeight + clearButtonHeight*2/3);
         
         // draw all the grid elements
         for (int i = 0; i < length; i++) {
@@ -139,8 +189,8 @@ public class Grid extends JPanel implements MouseListener, JMC {
         		// Draw the cell (interestingly, you want to draw them vertically upside 
         		// down, so the lower pitches (lower indices in grid) are lower in the 
         		// visual field (higher "y" values) 
-        		int x = horizOffset + (cellWidth + horizSpacer)*i;
-        		int y = vertOffset  + (cellHeight + vertSpacer)*(height-1-j);
+        		int x = horizGridOffset + (cellWidth + horizCellSpacer)*i;
+        		int y = vertGridOffset  + (cellHeight + vertCellSpacer)*(height-1-j);
         		if (numInstrumentsInCell == 0) {
         			// draw an empty cell if no instruments have selected it
         			g.setColor(Color.WHITE);
@@ -411,37 +461,72 @@ public class Grid extends JPanel implements MouseListener, JMC {
 	}
 
 	@Override
-	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub	
-
-		// TODO remove hack to get visual to play.
-		if (e.getX() < horizOffset) {
-			Play.midi(getScoreWithRepeats(3));
-		}
-	}
+	public void mouseClicked(MouseEvent e) {}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		int x = (e.getX() - horizOffset) / (cellWidth+horizSpacer);
-		int y = height - 1 - (e.getY() - vertOffset) / (cellHeight+vertSpacer);
+		int x = e.getX();
+		int y = e.getY();
 		
-		// TODO change to proper instrument
-		changeLocation(1, x, y);
+		if (x < horizGridOffset) {
+			x -= generalSpacer;
+			y -= generalSpacer;
+			if (x >= 0 && x < colorChooserDimensions && 
+			    y >= 0 && y < colorChooserDimensions) {
+				// inside colorPicker	
+				int boxWidthHeight = (colorChooserDimensions-3*colorChooserSpacer)/2;
+				
+				// TODO rewrite this to be variable based on numInstruments
+				// See which of the boxes we're in, return if in none
+				if (x > colorChooserSpacer && x < colorChooserSpacer+boxWidthHeight) {
+					x = 0;
+				} else if (x > colorChooserSpacer*2 + boxWidthHeight && x < colorChooserSpacer*2+boxWidthHeight*2) {
+					x = 1;
+				} else {
+					return;
+				}
+				if (y > colorChooserSpacer && y < colorChooserSpacer+boxWidthHeight) {
+					y = 0;
+				} else if (y > colorChooserSpacer*2 + boxWidthHeight && y < colorChooserSpacer*2+boxWidthHeight*2) {
+					y = 1;
+				} else {
+					return;
+				}
+				
+				currentInst = x+2*y;				
+				
+			} else if (x >= 0 && x < playButtonLength &&
+					   y >= colorChooserDimensions+generalSpacer &&
+					   y < colorChooserDimensions+generalSpacer+playButtonHeight) {
+				// inside play button
+				(new Thread(new Runnable() {
+		            @Override
+		            public void run() {
+		            	Play.midi(getScoreWithRepeats(3));
+		            }
+		        })).start();
+			} else if (x >= 0 && x < clearButtonLength &&
+					   y >= colorChooserDimensions+generalSpacer*2+playButtonHeight &&
+					   y < colorChooserDimensions+generalSpacer*2+playButtonHeight+clearButtonHeight) {
+				// inside clear button
+				clearGrid();
+			}
+		} else {
+			// Clicked inside the cell
+			x = (x - horizGridOffset) / (cellWidth+horizCellSpacer);
+			y = height - 1 - (y - vertGridOffset) / (cellHeight+vertCellSpacer);
+			changeLocation(currentInst, x, y);
+		}
+
 		repaint();
 	}
 
 	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub		
-	}
+	public void mouseReleased(MouseEvent e) {}
 
 	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub		
-	}
+	public void mouseEntered(MouseEvent e) {}
 
 	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub		
-	}
+	public void mouseExited(MouseEvent e) {}
 }
