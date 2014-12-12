@@ -5,28 +5,11 @@
 
 <!--Describe your domain and motivate the need for a DSL (i.e., how could domain-experts use and benefit from a DSL?). What is the essence of your language, and why is it a good language for this domain?-->
 
-The domain of Tonatrix, or the Tone Matrix with Tonality language, is simple 
-musical composition. My goals with this language were to create a language that
-would allow users to program musical melodies with multiple instruments, or 
-voices, simultaneously, but to do so while allowing the tool to be used by 
-people with no background in music theory or sound synthesis.
+The domain of Tonatrix, or the Tone Matrix with Tonality language, is simple musical composition. My goals with this language were to create a language that would allow users to program musical melodies with multiple instruments, or voices, simultaneously, but to do so while allowing the tool to be used by people with no background in music theory or sound synthesis.
 
-To keep it simple, I had to limit what type of sounds could be made. There are 
-many existing tools and languages in this domain, some of which I list in my 
-[first notebook entry](https://github.com/cvcal/NoteMatrix-project-notebook/blob/master/November%202.md), 
-so I had many examples to base my ideas from. I knew that I couldn't try to 
-make any thing resembling a fully featured synthesizer, as that would make 
-the language far too complicated, but as varying voices was one of my initial 
-requirements, I needed a way to specify different types of sounds, and as I 
-was planning on having a graphics interface, I chose color. 
+To keep it simple, I had to limit what type of sounds could be made. There are many existing tools and languages in this domain, some of which I list in my [first notebook entry](https://github.com/cvcal/NoteMatrix-project-notebook/blob/master/November%202.md), so I had many examples to base my ideas from. I knew that I couldn't try to make any thing resembling a fully featured synthesizer, as that would make the language far too complicated, but as varying voices was one of my initial requirements, I needed a way to specify different types of sounds, and as I was planning on having a graphics interface, I chose color. 
 
-I also could not use standard musical notation if I wanted to keep the language 
-accessible to people with no musical background. I decided to go for the tried 
-and true grid representation, where the pitch is along the y-axis and time is 
-along the x-axis. I don't think this is naturally intuitive, but it is such 
-a commonly used system that it has become culturally so, at the very least.
-
-
+I also could not use standard musical notation if I wanted to keep the language accessible to people with no musical background. I decided to go for the tried and true grid representation, where the pitch is along the y-axis and time is along the x-axis. I don't think this is naturally intuitive, but it is such a commonly used system that it has become culturally so, at the very least.
 
 ## Language design details: (language design overview)
 
@@ -42,6 +25,20 @@ Error handling: How can programs go wrong, and how does your language communicat
 What tool support (e.g., error-checking, development environments) does your project provide?
 Are there any other DSLs for this domain? If so, what are they, and how does your language compare to these other languages?
 Example program(s): Provide one or more examples that give the casual reader a good sense of your language. Include inputs and outputs. Think of this section as “Tutorial By Example”. You might combine this section with the previous one, i.e., use examples to help describe your language.-->
+
+Tonatrix is written through a GUI, in which a user selects and un-selects cells in the grid. The user does not need to think of what absolute value a note has, though an understanding of intervals would help, but can simply click a note to play it with the selected instrument, and see what it sounds like.
+
+<p align="center">
+  <img src="https://github.com/cvcal/NoteMatrixWithTonality/blob/master/documents/pictures/workingVersionWithThings.png" width="250" />
+</p> 
+
+In the example above, there are parts on the grid associated with all four available instruments. The green instrument is selected in the upper-left hand corner, which means that clicking any location on the grid will either add a green note at the time and pitch, or remove one if there was already one there. To edit another color, first select that color from the grid, then
+
+To give a sense of the intervals, the example below is "Twinkle Twinkle Little Stars," as in [this](https://github.com/cvcal/NoteMatrixWithTonality/blob/master/src/tests/LargeGridTest.java) example program but with all but the melody removed for visual clarity. 
+
+<p align="center">
+  <img src="https://github.com/cvcal/NoteMatrixWithTonality/blob/master/documents/pictures/workingVersionWithThings.png" width="350" />
+</p> 
 
 ## Language implementation: (language implementation overview) 
 
