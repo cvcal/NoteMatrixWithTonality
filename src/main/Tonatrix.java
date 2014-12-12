@@ -1,13 +1,11 @@
 package main;
 
 import java.awt.EventQueue;
-import java.awt.FlowLayout;
 
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import jm.util.Play;
 
 public class Tonatrix {
 
@@ -22,7 +20,7 @@ public class Tonatrix {
 		// Define the 4 instruments
 		grid.addInstrument(0,0);
 		grid.addInstrument(1,4);
-		grid.addInstrument(2,2);
+		grid.addInstrument(2,5);
 		grid.addInstrument(3,3);
 		
 		// Open up le GUI

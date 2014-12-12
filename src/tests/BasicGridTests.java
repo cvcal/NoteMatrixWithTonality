@@ -1,7 +1,6 @@
 package tests;
 import main.Grid;
 import jm.util.*;
-//import jm.JMC;
 
 /**
  * Simple test for my Grid class
@@ -47,7 +46,10 @@ public final class BasicGridTests{
 		grid.changeLocation(3,9,14);
 		grid.changeLocation(3,10,12);
 		
-		// Play the score!
+		// Play the sounds
 		Play.midi(grid.getScoreWithRepeats(3));
 	}
+	
 }
+
+

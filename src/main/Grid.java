@@ -3,18 +3,12 @@ import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
 
-import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 
 import jm.JMC;
 import jm.music.data.*;
-//import jm.music.tools.*;
-//import jm.util.*;
 import jm.util.Play;
 
 /**
