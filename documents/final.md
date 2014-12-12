@@ -29,10 +29,10 @@ Example program(s): Provide one or more examples that give the casual reader a g
 Tonatrix is written through a GUI, in which a user selects and un-selects cells in the grid. The user does not need to think of what absolute value a note has, though an understanding of intervals would help, but can simply click a note to play it with the selected instrument, and see what it sounds like.
 
 <p align="center">
-  <img src="https://github.com/cvcal/NoteMatrixWithTonality/blob/master/documents/pictures/workingVersionWithThings.png" width="250" />
+  <img src="https://github.com/cvcal/NoteMatrixWithTonality/blob/master/documents/pictures/TwinkleTwinkleLittleStar.png" width="250" />
 </p> 
 
-In the example above, there are parts on the grid associated with all four available instruments. The green instrument is selected in the upper-left hand corner, which means that clicking any location on the grid will either add a green note at the time and pitch, or remove one if there was already one there. To edit another color, first select that color from the grid, then
+In the example above, there are parts on the grid associated with all four available instruments. The green instrument is selected in the upper-left hand corner, which means that clicking any location on the grid will either add a green note at the time and pitch, or remove one if there was already one there. To edit another color, first select that color from the grid, then proceed. There is also a "Clear" button to empty the entire grid. The "Play" button essentially initiates the compilation step, in a sense. It will take all the notes and play them sequentially three times. The GUI does not yet have the capability of playing it for a variable number of times, though the underlying grid data structure does.
 
 To give a sense of the intervals, the example below is "Twinkle Twinkle Little Stars," as in [this](https://github.com/cvcal/NoteMatrixWithTonality/blob/master/src/tests/LargeGridTest.java) example program but with all but the melody removed for visual clarity. 
 
