@@ -1,7 +1,7 @@
 # Tonatrix Final Write-Up
 
 
-## Introduction: (Project Description
+## Introduction: 
 
 <!--Describe your domain and motivate the need for a DSL (i.e., how could domain-experts use and benefit from a DSL?). What is the essence of your language, and why is it a good language for this domain?-->
 
@@ -11,7 +11,7 @@ To keep it simple, I had to limit what type of sounds could be made. There are m
 
 I also could not use standard musical notation if I wanted to keep the language accessible to people with no musical background. I decided to go for the tried and true grid representation, where the pitch is along the y-axis and time is along the x-axis. I don't think this is naturally intuitive, but it is such a commonly used system that it has become culturally so, at the very least.
 
-## Language design details: (language design overview)
+## Language design details:
 
 <!--Give a high-level overview of your language's design. Be sure to answer the following questions:
 
@@ -46,20 +46,7 @@ Of the many other languages and tools in the domain, some of the ones I found mo
 
 Of these examples, the one I took the most to heart was tonematrix. I see my language, Tonatrix, to be, ideally, an extention of tonematrix. The online tool gives immediate feedback and is very intuitive to use as the locations being played are visually identified to make it easier for the user to quickly understand where the sounds are coming from. The main aspect I wanted to add to this is the ability to use multiple instruments. Other potential features initially included the ability to vary the notes' length and to use grids in loops with more control than the implicit continuous loop of tonematrix. I believe the looping functionality, which would allow sequencing of multiple grids with user-defined number of repetitions, can greatly enhance the power of this language, and it should still be within reach of the language, given a few more weeks' work. 
 
-## Language implementation: (language implementation overview) 
-
-<!--Describe your implementation. In particular, answer the following questions:
-
-What host language did you use (i.e., in what language did you implement your DSL)? Why did you choose this host language (i.e., why is it well-suited for your language design)?
-Is yours an external or an internal DSL (or some combination thereof)? Why is that the right design?
-Provide an overview of the architecture of your language: front, middle, and back-end, along with any technologies used to implement these components.
-“Parsing”: How does your DSL take a user program and turn it into something that can be executed? How do the data and control structures of your DSL connect to the underlying semantic model?
-Intermediate representation: What data structure(s) in the host language do you use to represent a program in your DSL?
-Execution: How did you implement the computational model? Describe the structure of your code and any special programming techniques you used to implement your language. In particular, how do the semantics of your host language differ from the semantics of your DSL?-->
-
-Tonematrix is implemented in Java, using the JMusic library for the midi music output and the swift API for the graphical interface. I chose Java due to its versatility and cross compatibility. I also was initially hesitating with Scala for parts of the implementation, so I started by looking for music libraries in Java for compatibility and found all I needed, so it was fine.
-
-I think my language is external in nature, but it is currently mixed in implementation. The IR is, obviously, entirely in Java, and the main interface should be the graphical interface, but the GUI is not yet full-featured and cannot stand on its own. The size of the grid and the four instruments available must all be declared in the java main class that launches the GUI. 
+My current implementation has most of the initial design worked out. The user can select notes, remove them, and play the music. Here's what it looks like:
 
 <p align="center">
   <img src="https://github.com/cvcal/NoteMatrixWithTonality/blob/master/documents/pictures/workingVersionWithThings.png" width="250" />
@@ -75,7 +62,28 @@ To give a sense of the intervals, the example below is "Twinkle Twinkle Little S
 </p> 
 
 
-## Evaluation: (preliminary evaluation)
+## Language implementation:
+
+<!--Describe your implementation. In particular, answer the following questions:
+
+What host language did you use (i.e., in what language did you implement your DSL)? Why did you choose this host language (i.e., why is it well-suited for your language design)?
+Is yours an external or an internal DSL (or some combination thereof)? Why is that the right design?
+Provide an overview of the architecture of your language: front, middle, and back-end, along with any technologies used to implement these components.
+“Parsing”: How does your DSL take a user program and turn it into something that can be executed? How do the data and control structures of your DSL connect to the underlying semantic model?
+Intermediate representation: What data structure(s) in the host language do you use to represent a program in your DSL?
+Execution: How did you implement the computational model? Describe the structure of your code and any special programming techniques you used to implement your language. In particular, how do the semantics of your host language differ from the semantics of your DSL?-->
+
+Tonematrix is implemented in Java, using the JMusic library for the midi music output and the swift API for the graphical interface. I chose Java due to its versatility and cross compatibility. I also was initially hesitating with Scala for parts of the implementation, so I started by looking for music libraries in Java for compatibility and found all I needed, so it was fine.
+
+I think my language is external in nature, but it is currently mixed in implementation. The IR is, obviously, entirely in Java, and the main interface should be the graphical interface, but the GUI is not yet full-featured and cannot stand on its own. The size of the grid and the four instruments available must all be declared in the java main class that launches the GUI. 
+
+The basic structure of the language is currently contained in the [Grid class](https://github.com/cvcal/NoteMatrixWithTonality/blob/master/src/main/Grid.java). The intermediate representation is mostly made with simple variables and arrays. The grid of notes is a three dimensional boolean array representing the on/off state for each grid location (`x` dimension represents time, `y` represents pitch) for each instrument. The list of instruments is a two-dimensional array, since I wanted to be able to mark an instrument as selected/unselected as well as the number values. This is part of the implementation that I will probably wish to rethink as I expand the language and make it more adaptable. 
+
+In the GUI format, the equivalent to parsing would be turning the clicks on screen into the appropriate changes of the grid. This is handled in the `mousePressed(MouseEvent)` method in the [Grid class](https://github.com/cvcal/NoteMatrixWithTonality/blob/master/src/main/Grid.java), and executes by making the appropriate method calls to change the grid's contents. 
+
+Since the grid is parsed continuously, the evaluation step just needs to compile the notes corresponding to the `true` values in the array, and translate these into Notes into Phrases into Parts (which have the instrument information) and combine them all to form Scores. This follows JMusic's hierarchy, and takes some getting used to, but it isn't quite as complicated as all the categories make it seem. On the other hand, having to deal with this reminded me why I had decided to forgo text-based input for my language. 
+
+## Evaluation: 
 
 <!--Provide some analysis of the work you did. In particular:
 
@@ -85,3 +93,6 @@ What could be improved? For example, how could the user's experience be better? 
 Re-visit your evaluation plan from the beginning of the project. Which tools have you used to evaluate the quality of your design? What have you learned from these evaluations? Have you made any significant changes as a result of these tools, the critiques, or user tests?
 Where did you run into trouble and why? For example, did you come up with some syntax that you found difficult to implement, given your host language choice? Did you want to support multiple features, but you had trouble getting them to play well together?
 If you worked as a pair, describe how you have divided your labor and whether that division has worked well.-->
+
+
+The graphical interface is currently all coded into the [grid class](https://github.com/cvcal/NoteMatrixWithTonality/blob/master/src/main/Grid.java), which was initially intended to be only to hold the back end but which I combined in order to have a working prototype by the end of the project. 
