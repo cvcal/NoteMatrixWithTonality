@@ -30,14 +30,15 @@ Example program(s): Provide one or more examples that give the casual reader a g
 Tonatrix is a language written through a GUI, in which a user selects and un-selects cells in the grid. The user does not need to think of what absolute value a note has, though an understanding of intervals would help, but can simply click a note to play it with the selected instrument, and see what it sounds like. My ideal design is below:
 
 <p align="center">
-  <img src="https://github.com/cvcal/NoteMatrixWithTonality/blob/master/documents/initial_examples/GUI_idea_withLoops_inUse.png" width="500" />
+  <img src="https://github.com/cvcal/NoteMatrixWithTonality/blob/master/documents/initial_examples/GUI_simple_inUse.png" width="500" />
 </p>
 
 In this idea, the user selects the instruments and size of the grid to use for the piece, and then can work within the grid to select which notes will be played by which instrument. Part of the design which I also really wanted to include in mmy language was the ability to control how often a single grid would loop, and how different grids could follow each other. This fully featured ideal is below.
 
 <p align="center">
-  <img src="https://github.com/cvcal/NoteMatrixWithTonality/blob/master/documents/initial_examples/GUI_simple_inUse.png" width="500" />
+  <img src="https://github.com/cvcal/NoteMatrixWithTonality/blob/master/documents/initial_examples/GUI_idea_withLoops_inUse.png" width="500" />
 </p>
+
 
 The GUI does not recognize anything that would cause an error, so there is no real need for error handling. The intermediate representation can ask for incorrect grid locations, but these should get ignored. I have not yet added error handling though, as I intend this to be used through the GUI, and through the GUI only. 
 
@@ -70,7 +71,7 @@ To give a sense of the intervals, the example below is "Twinkle Twinkle Little S
 
 
 <p align="center">
-  <img src="https://github.com/cvcal/NoteMatrixWithTonality/blob/master/documents/pictures/TwinkleTwinkleLittleStar.png" width="350" />
+  <img src="https://github.com/cvcal/NoteMatrixWithTonality/blob/master/documents/pictures/TwinkleTwinkleLittleStar.png" width="420" />
 </p> 
 
 
