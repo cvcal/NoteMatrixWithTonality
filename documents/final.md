@@ -75,7 +75,7 @@ Execution: How did you implement the computational model? Describe the structure
 
 Tonematrix is implemented in Java, using the JMusic library for the midi music output and the swift API for the graphical interface. I chose Java due to its versatility and cross compatibility. I also was initially hesitating with Scala for parts of the implementation, so I started by looking for music libraries in Java for compatibility and found all I needed, so it was fine.
 
-I think my language is external in nature, but it is currently mixed in implementation. The IR is, obviously, entirely in Java, and the main interface should be the graphical interface, but the GUI is not yet full-featured and cannot stand on its own. The size of the grid and the four instruments available must all be declared in the java main class that launches the GUI. 
+I think my language is external in nature, but it is currently mixed in implementation. The IR is, obviously, entirely in Java, and the main interface should be the graphical interface, but the GUI is not yet full-featured and cannot stand on its own. The size of the grid and the four instruments available must all be declared in the java main class that launches the GUI. I want to eventually make the entire language environment stand on its own, but it hasn't reach that point quite yet.
 
 The basic structure of the language is currently contained in the [Grid class](https://github.com/cvcal/NoteMatrixWithTonality/blob/master/src/main/Grid.java). The intermediate representation is mostly made with simple variables and arrays. The grid of notes is a three dimensional boolean array representing the on/off state for each grid location (`x` dimension represents time, `y` represents pitch) for each instrument. The list of instruments is a two-dimensional array, since I wanted to be able to mark an instrument as selected/unselected as well as the number values. This is part of the implementation that I will probably wish to rethink as I expand the language and make it more adaptable. 
 
@@ -94,5 +94,17 @@ Re-visit your evaluation plan from the beginning of the project. Which tools hav
 Where did you run into trouble and why? For example, did you come up with some syntax that you found difficult to implement, given your host language choice? Did you want to support multiple features, but you had trouble getting them to play well together?
 If you worked as a pair, describe how you have divided your labor and whether that division has worked well.-->
 
+I believe Tonatrix is very much a DSL. It is at the very least very far from a general purpose language, as it is mostly a way to input and describe musical sounds, but it could be argued that it is too close to being an app and has little about it that is truly a language. The looping implementation, with its ability to combine multiple grids after controllable numbers of loops, brings this language closer to being recognized as a programming language, but even without that feature implemented, I believe that Tonatrix treats the process of creating a song very much as a program. 
 
-The graphical interface is currently all coded into the [grid class](https://github.com/cvcal/NoteMatrixWithTonality/blob/master/src/main/Grid.java), which was initially intended to be only to hold the back end but which I combined in order to have a working prototype by the end of the project. 
+I am very pleased with my back-end. To see the Grid class before it was corrupted with all the GUI implementation, you can go to [this](https://github.com/cvcal/NoteMatrixWithTonality/commit/ea469d17c387d57383b35cbdad3dc3daef128dcb) commit. I believe I found the best way to translate my grid concept into a format compatible with the libraries available to me.
+
+One thing I am not very pleased with is the structure of the GUI. The graphical interface is currently all coded into the [grid class](https://github.com/cvcal/NoteMatrixWithTonality/blob/master/src/main/Grid.java), which was initially intended to be only to hold the back end but which I combined in order to have a working prototype by the end of the project. It saved me time, and I do now have something to show, so I believe the trade-off was worth it. I want to learn more about layout managers and designing graphical interfaces so that the different parts of the language can be appropriately separated instead of all thrown together into a pit. This will be necessary if I want to make the looping functionality, and will also make the code much more manageable and maintainable. 
+
+
+
+
+
+
+
+
+
