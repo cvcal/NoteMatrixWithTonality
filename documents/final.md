@@ -71,7 +71,7 @@ To give a sense of the intervals, the example below is "Twinkle Twinkle Little S
 
 
 <p align="center">
-  <img src="https://github.com/cvcal/NoteMatrixWithTonality/blob/master/documents/pictures/TwinkleTwinkleLittleStar.png" width="420" />
+  <img src="https://github.com/cvcal/NoteMatrixWithTonality/blob/master/documents/pictures/TwinkleTwinkleLittleStar.png" width="520" />
 </p> 
 
 
